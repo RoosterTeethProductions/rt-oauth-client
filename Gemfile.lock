@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    rt-oauth-client (0.1.0)
+    rt_oauth-oauth-client (0.1.0)
       rails (~> 5.0.1)
 
 GEM
@@ -153,7 +153,7 @@ DEPENDENCIES
   rack-oauth2 (~> 1.6.2)
   rake (~> 10.0)
   rspec (~> 3.0)
-  rt-oauth-client!
+  rt_oauth-oauth-client!
   sqlite3
   webmock (~> 3.0)
 

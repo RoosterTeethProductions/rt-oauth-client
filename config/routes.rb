@@ -1,2 +1,2 @@
-Rt::Oauth::Client::Engine.routes.draw do
+RtOauthClient::Engine.routes.draw do
 end

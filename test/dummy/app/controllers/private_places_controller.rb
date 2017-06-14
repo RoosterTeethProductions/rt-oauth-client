@@ -1,7 +1,5 @@
-require 'rt/oauth/client'
-require 'rt/oauth/client/protector'
 class PrivatePlacesController < ApplicationController
-  include Rt::Oauth::Client::Protector
+  include RtOauthClient::Protector
 
   # GET /private_places
   def index

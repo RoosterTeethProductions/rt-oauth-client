@@ -1,6 +1,4 @@
-require "rt/oauth/client/authorizer"
-
-module Rt::Oauth::Client
+module RtOauthClient
   module Authorizer
     extend ActiveSupport::Concern
     included do
@@ -9,11 +7,11 @@ module Rt::Oauth::Client
     def authorize!(token)
       @authorization = begin
         _response = HTTParty.get(
-          Rt::Oauth::Client.configuration.oauth_url,
-          query:   {Rt::Oauth::Client.configuration.token_name => token},
+          RtOauthClient.configuration.oauth_url,
+          query:   {RtOauthClient.configuration.token_name => token},
           headers: {
-            'X-Client-Id'     => Rt::Oauth::Client.configuration.client_id,
-            'X-Client-Secret' => Rt::Oauth::Client.configuration.client_secret,
+            'X-Client-Id'     => RtOauthClient.configuration.client_id,
+            'X-Client-Secret' => RtOauthClient.configuration.client_secret,
             'Accept'          => 'application/json',
             'Content-Type'    => 'application/json'
           }

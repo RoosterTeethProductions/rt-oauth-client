@@ -1,4 +1,4 @@
-Rt::Oauth::Client.configure do |config|
+RtOauthClient.configure do |config|
   config.authentication_methods = [:cookie_auth, :param_token, :bearer_token]
   config.cookie_name            = 'access_token'
   config.token_name             = 'access_token'

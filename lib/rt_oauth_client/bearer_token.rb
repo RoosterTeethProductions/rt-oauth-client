@@ -1,6 +1,4 @@
-require "rt/oauth/client/authorizer"
-
-module Rt::Oauth::Client
+module RtOauthClient
   module BearerToken
     extend ActiveSupport::Concern
     included do
@@ -8,7 +6,7 @@ module Rt::Oauth::Client
 
     def find_bearer_token
       request.headers.find do |key, value|
-        value if key.match(Rt::Oauth::Client.configuration.bearer_token_regex)
+        value if key.match(RtOauthClient.configuration.bearer_token_regex)
       end
     end
   end

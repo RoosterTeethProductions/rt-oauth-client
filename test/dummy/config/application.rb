@@ -3,7 +3,7 @@ require_relative 'boot'
 require 'rails/all'
 
 Bundler.require(*Rails.groups)
-require "rt/oauth/client"
+require "rt_oauth_client"
 
 module Dummy
   class Application < Rails::Application
