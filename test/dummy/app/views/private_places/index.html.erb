@@ -1,0 +1,25 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Private Places</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @private_places.each do |private_place| %>
+      <tr>
+        <td><%= link_to 'Show', private_place %></td>
+        <td><%= link_to 'Edit', edit_private_place_path(private_place) %></td>
+        <td><%= link_to 'Destroy', private_place, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Private Place', new_private_place_path %>

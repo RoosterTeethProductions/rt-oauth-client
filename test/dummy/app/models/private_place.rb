@@ -1,0 +1,2 @@
+class PrivatePlace < ApplicationRecord
+end
