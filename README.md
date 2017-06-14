@@ -7,7 +7,7 @@ Provides authorization by services back to the RT Oauth service
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'rt_oauth'
+gem 'rt_oauth_client'
 ```
 
 And then execute:
@@ -60,6 +60,11 @@ class SomeController < RtOauthClient::ApplicationController
 end
 
 ```
+
+## TODO
+
+1. Cache common calls to remote
+1. Create rake tasks for install 
 
 ## Contributing
 Contribution directions go here.
