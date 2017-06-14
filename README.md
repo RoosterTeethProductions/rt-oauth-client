@@ -7,7 +7,7 @@ Provides authorization by services back to the RT Oauth service
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'rt_oauth_client'
+gem 'rt-oauth-client'
 ```
 
 And then execute:

@@ -5,7 +5,7 @@ require "rt_oauth_client/version"
 
 # Describe your gem and declare its dependencies:
 Gem::Specification.new do |s|
-  s.name        = "rt_oauth-oauth-client"
+  s.name        = "rt-oauth-client"
   s.version     = RtOauthClient::VERSION
   s.authors     = ["Mike Quinn"]
   s.email       = ["mike.quinn@roosterteeth.com"]
@@ -16,7 +16,7 @@ Gem::Specification.new do |s|
 
   s.files = Dir["{app,config,db,lib}/**/*", "MIT-LICENSE", "Rakefile", "README.md"]
 
-  s.add_dependency "rails", "~> 5.0.1"
+  s.add_dependency "rails", "~> 5.0"
 
   s.add_development_dependency "bundler", "~> 1.15"
   s.add_development_dependency "rake", "~> 10.0"
