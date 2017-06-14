@@ -53,6 +53,13 @@ class SomeController < ApplicationController
 end
 ```
 
+Or inherit from the main controller to inherit the `#protect!` method
+
+```ruby 
+class SomeController < RtOauthClient::ApplicationController
+end
+
+```
 
 ## Contributing
 Contribution directions go here.
