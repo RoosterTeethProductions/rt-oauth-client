@@ -15,20 +15,24 @@ module RtOauthClient
     end
 
     def protect!
-      return @user if @user
-      @user = nil
+      return @protected_user if @protected_user
+      @protected_user = nil
       RtOauthClient.configuration.authentication_methods.each do |m|
         token = send("find_#{m}")
         next unless token
         if response = authorize!(token).success?
-          @user = response.parsed_response
+          @protected_user = response.parsed_response
           break
         end
       end
-      unless @user
+      unless @protected_user
         head 403
       end
-      @user
+      @protected_user
+    end
+
+    def protected_user
+      @protected_user
     end
 
   end
