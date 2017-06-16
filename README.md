@@ -61,6 +61,10 @@ end
 
 ```
 
+## Response if a user is found by the `#protect!` method
+
+Response is generated from [rt-oauth2](https://github.com/RoosterTeethProductions/rt-oauth2#response)
+
 ## TODO
 
 1. Cache common calls to remote
