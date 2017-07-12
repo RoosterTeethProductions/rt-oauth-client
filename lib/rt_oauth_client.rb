@@ -5,10 +5,10 @@ require 'rt_oauth_client/param_token'
 require 'rt_oauth_client/authorizer'
 require 'rt_oauth_client/protector'
 module RtOauthClient
-  autoload :Authorizer, 'client/authorizer'
-  autoload :CookieAuth, 'client/cookie_auth'
-  autoload :ParamToken, 'client/param_token'
-  autoload :Protector, 'client/protector'
+  autoload :Authorizer, 'rt_oauth_client/authorizer'
+  autoload :CookieAuth, 'rt_oauth_client/cookie_auth'
+  autoload :ParamToken, 'rt_oauth_client/param_token'
+  autoload :Protector, 'rt_oauth_client/protector'
 
   class << self
     attr_accessor :configuration

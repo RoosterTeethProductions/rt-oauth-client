@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    rt-oauth-client (0.1.2)
+    rt-oauth-client (0.1.3)
       rails (~> 5.0)
 
 GEM
