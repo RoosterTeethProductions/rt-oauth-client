@@ -17,9 +17,12 @@ Gem::Specification.new do |s|
   s.files = Dir["{app,config,db,lib}/**/*", "MIT-LICENSE", "Rakefile", "README.md"]
 
   s.add_dependency "rails", "~> 5.0"
+  s.add_dependency "oauth2", "~> 1.0"
 
   s.add_development_dependency "bundler", "~> 1.15"
   s.add_development_dependency "rake", "~> 10.0"
   s.add_development_dependency "rspec", "~> 3.0"
   s.add_development_dependency "webmock", "~> 3.0"
+  s.add_development_dependency "factory_girl", "~> 4.7.0"
+  s.add_development_dependency "factory_girl_rails", "~> 4.7.0"
 end
