@@ -6,6 +6,7 @@ require 'rt_oauth_client/protector'
 module RtOauthClient
   autoload :Authorizer, 'rt_oauth_client/authorizer'
   autoload :ParamToken, 'rt_oauth_client/param_token'
+  autoload :BearerToken, 'rt_oauth_client/bearer_token'
   autoload :Protector, 'rt_oauth_client/protector'
 
   class << self

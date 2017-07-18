@@ -5,9 +5,7 @@ module RtOauthClient
     end
 
     def find_bearer_token
-      request.headers.find do |key, value|
-        value if key.match(RtOauthClient.configuration.bearer_token_regex)
-      end
+      headers['HTTP_AUTHORIZATION'].match(RtOauthClient.configuration.bearer_token_regex) && headers['HTTP_AUTHORIZATION'].split(/bearer/i).last.gsub(/\s/,'')
     end
   end
 end
