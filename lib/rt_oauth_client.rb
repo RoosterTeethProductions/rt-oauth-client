@@ -24,7 +24,7 @@ module RtOauthClient
                   :oauth_uri, :redirect_uri, :token_path, :me_path, :authorize_path
 
     def initialize
-      @authentication_methods = [:cookie_auth, :param_token, :bearer_token]
+      @authentication_methods = [:bearer_token, :param_token]
       @token_name             = 'access_token'
       @oauth_token_name       = 'access_token'
       @client_id              = 'a0f788c8f081c343a889af3d6473652895e871f34a8ac17a29dd036b7b2919af'

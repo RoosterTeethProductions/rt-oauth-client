@@ -19,10 +19,14 @@ $ bundle
 
 ## Configuration
 
+Put the following in `$app_root/config/initializers/rt_oauth_client.rb`
+
 ```ruby
 RtOauthClient.configure do |config|
   # all available authentication methods
-  config.authentication_methods = [:cookie_auth, :param_token, :bearer_token]
+  # param_token allows the params[:param_token] to be sent to the oauth server
+  # bearer_token allows for `headers[:bearer_token]` to be parsed and sent to the oauth server
+  config.authentication_methods = [:bearer_token, :param_token]
   # Named cookie to look for
   config.cookie_name            = 'access_token'
   # Named token via param
@@ -34,14 +38,18 @@ RtOauthClient.configure do |config|
   # client secret
   config.client_secret          = ''
   # bearer regex - looked for in headers
+  # Probably dont want to change this
   config.bearer_token_regex     = /Bearer /i
   # the OAUTH URL to get user info from
-  config.oauth_url              = 'http://localhost:3200/api/v1/me.json'
+  config.oauth_url              = 'https://auth.staging.roosterteeth.com'
 end
 
 ```
 
 ## Protecting a controller
+
+When the below is implemented, `#protected_user` (User) Hash will become available, similar to devise and `#current_user`
+The internals of the `#protected_user` hash will be the return from [rt-oauth2 response](https://github.com/RoosterTeethProductions/rt-oauth2#response)
 
 Adding `include RtOauthClient::Protector` to a controller will protect that controller with `#protect!` method
 
