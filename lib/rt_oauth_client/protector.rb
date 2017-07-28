@@ -9,10 +9,9 @@ module RtOauthClient
       include RtOauthClient::Authorizer
       include RtOauthClient::ParamToken
       include RtOauthClient::BearerToken
-      before_action :protect!
     end
 
-    def protect!
+    def protect_with_user
       return @protected_user if @protected_user
       @protected_user = nil
       RtOauthClient.configuration.authentication_methods.each do |m|
@@ -24,14 +23,20 @@ module RtOauthClient
           break
         end
       end
+      @protected_user
+    end
+
+    def protect!
+      return @protected_user if @protected_user
       unless @protected_user
         head 403
       end
       @protected_user
     end
+    alias_method :protect_with_user!, :protect!
 
     def protected_user
-      @protected_user
+      @protected_user ||= protect_with_user
     end
 
   end

@@ -34,7 +34,7 @@ RtOauthClient.configure do |config|
   # oauth token name
   config.oauth_token_name       = 'access_token'
   # client ID to use
-  config.client_id              = 'a0f788c8f081c343a889af3d6473652895e871f34a8ac17a29dd036b7b2919af'
+  config.client_id              = ''
   # client secret
   config.client_secret          = ''
   # bearer regex - looked for in headers
@@ -51,9 +51,11 @@ end
 When the below is implemented, `#protected_user` (User) Hash will become available, similar to devise and `#current_user`
 The internals of the `#protected_user` hash will be the return from [rt-oauth2 response](https://github.com/RoosterTeethProductions/rt-oauth2#response)
 
-Adding `include RtOauthClient::Protector` to a controller will protect that controller with `#protect!` method
+Add `include RtOauthClient::Protector` to a controller
 
-If you want to skip this for an action, add: `skip_before_action :protect!, actions: [:create]` or whatever
+add `before_action protect_with_user!` to halt with 403 if a user is not found
+
+add `before_action protect_with_user` _not_ to halt with 403
 
 ```
 class SomeController < ApplicationController
@@ -61,17 +63,126 @@ class SomeController < ApplicationController
 end
 ```
 
-Or inherit from the main controller to inherit the `#protect!` method
+## Response
 
-```ruby 
-class SomeController < RtOauthClient::ApplicationController
-end
+> All authorization responses should have the formats below.  If it does not, its a bug, report it. 
 
+_Private Response_
+
+```json
+{
+  "id":"05ec30d2-d98c-4986-8eb1-9c2c0f49278e",
+  "type":"user",
+  "attributes":{
+    "uuid":"05ec30d2-d98c-4986-8eb1-9c2c0f49278e",
+    "created_at":"2017-07-17T04:24:28.000Z",
+    "username":"a_user",
+    "display_title":null,
+    "pictures":{
+      "tb":{
+        "profile":"https://s3.amazonaws.com/cdn.roosterteeth.com/default/tb/user_profile_female.jpg",
+        "cover":"https://s3.amazonaws.com/cdn.roosterteeth.com/default/tb/generic_rt_cover.jpg"
+      },
+      "sm":{
+        "profile":"https://s3.amazonaws.com/cdn.roosterteeth.com/default/sm/user_profile_female.jpg",
+        "cover":"https://s3.amazonaws.com/cdn.roosterteeth.com/default/sm/generic_rt_cover.jpg"
+      },
+      "md":{
+        "profile":"https://s3.amazonaws.com/cdn.roosterteeth.com/default/md/user_profile_female.jpg",
+        "cover":"https://s3.amazonaws.com/cdn.roosterteeth.com/default/md/generic_rt_cover.jpg"
+      },
+      "original":{
+        "profile":"https://s3.amazonaws.com/cdn.roosterteeth.com/default/original/user_profile_female.jpg",
+        "cover":"https://s3.amazonaws.com/cdn.roosterteeth.com/default/original/generic_rt_cover.jpg"
+      }
+    },
+    "last_login_at":0,
+    "member_tier":"double_gold",
+    "member_tier_i":5,
+    "location":{
+      "timezone":"America/Chicago",
+      "store_region":"INTL",
+      "ipaddress":"::1"
+    },
+    "email":"me@this.com",
+    "db_id":5795,
+    "roles":[
+      "admin",
+      "cast_and_crew_admin"
+    ],
+    "birthday":"1997-07-17",
+    "sex":null,
+    "sponsorship_details":{
+      "sponsorship_starts_at":null,
+      "sponsorship_ends_at":null,
+      "sponsorship_type":null,
+      "double_gold_ends_at":null
+    }
+  },
+  "global_login_token":"5795:cozauYtGe7Yqv6ASn2Y2",
+  "meta":{
+    "id":1,
+    "full_name":"A User",
+    "address1":"101 Danny Way",
+    "address2":"none",
+    "city":"Austin",
+    "state_province":"TX",
+    "country":"US",
+    "zip_postal":"78741",
+    "shirt_size":"M",
+    "status":"current",
+    "shipping_cost":0.0,
+    "created_by":5795,
+    "updated_by":5795,
+    "deleted_by":null,
+    "last_bill_date":null,
+    "created_at":"2017-07-28T23:15:40.000Z",
+    "updated_at":"2017-07-28T23:15:40.000Z",
+    "deleted_at":null
+  }
+}
 ```
 
-## Response if a user is found by the `#protect!` method
+_Public Response_
 
-Response is generated from [rt-oauth2](https://github.com/RoosterTeethProductions/rt-oauth2#response)
+```json
+{
+  "id":"05ec30d2-d98c-4986-8eb1-9c2c0f49278e",
+  "type":"user",
+  "attributes":{
+    "uuid":"05ec30d2-d98c-4986-8eb1-9c2c0f49278e",
+    "created_at":"2017-07-17T04:24:28.000Z",
+    "username":"a_user",
+    "display_title":null,
+    "pictures":{
+      "tb":{
+        "profile":"https://s3.amazonaws.com/cdn.roosterteeth.com/default/tb/user_profile_female.jpg",
+        "cover":"https://s3.amazonaws.com/cdn.roosterteeth.com/default/tb/generic_rt_cover.jpg"
+      },
+      "sm":{
+        "profile":"https://s3.amazonaws.com/cdn.roosterteeth.com/default/sm/user_profile_female.jpg",
+        "cover":"https://s3.amazonaws.com/cdn.roosterteeth.com/default/sm/generic_rt_cover.jpg"
+      },
+      "md":{
+        "profile":"https://s3.amazonaws.com/cdn.roosterteeth.com/default/md/user_profile_female.jpg",
+        "cover":"https://s3.amazonaws.com/cdn.roosterteeth.com/default/md/generic_rt_cover.jpg"
+      },
+      "original":{
+        "profile":"https://s3.amazonaws.com/cdn.roosterteeth.com/default/original/user_profile_female.jpg",
+        "cover":"https://s3.amazonaws.com/cdn.roosterteeth.com/default/original/generic_rt_cover.jpg"
+      }
+    },
+    "last_login_at":0,
+    "member_tier":"double_gold",
+    "member_tier_i":5,
+    "location":{
+      "timezone":"America/Chicago",
+      "store_region":"INTL"
+    }
+  }
+}
+```
+
 
 ## TODO
 
