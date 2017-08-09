@@ -22,8 +22,9 @@ module RtOauthClient
         if respond_to?(:protect_failure)
           protect_failure
         else
-          head 403
+          render inline: 'you need sign in to continue', status: 401
         end
+        return
       end
     end
     alias_method :protect_with_user!, :protect!
