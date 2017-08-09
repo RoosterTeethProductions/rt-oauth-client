@@ -5,7 +5,7 @@ module RtOauthClient
     included do
       attr_accessor :user_token, :app_token
     end
-
+    
     def authorize_app!(scope = 'public')
       @app_token ||= begin
         client.client_credentials.get_token(scope: scope)

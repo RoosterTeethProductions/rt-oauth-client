@@ -10,34 +10,42 @@ module RtOauthClient
       include RtOauthClient::ParamToken
       include RtOauthClient::BearerToken
     end
+    
+    helper_method :protected_user
 
-    def protect_with_user
-      return @protected_user if @protected_user
-      @protected_user = nil
-      RtOauthClient.configuration.authentication_methods.each do |m|
-        token = send("find_#{m}")
-        next unless token
-        set_bearer_token(token)
-        if me
-          @protected_user = me
-          break
+    protected
+    
+    def protect!
+      fetch_user_from_oauth2 # load user from request headers
+      
+      unless protected_user
+        if respond_to?(:protect_failure)
+          protect_failure
+        else
+          head 403
         end
       end
-      @protected_user
-    end
-
-    def protect!
-      return @protected_user if @protected_user
-      unless @protected_user
-        head 403
-      end
-      @protected_user
     end
     alias_method :protect_with_user!, :protect!
-
-    def protected_user
-      @protected_user ||= protect_with_user
+    
+    def fetch_user_from_oauth2
+      if protected_user.nil?
+        RtOauthClient.configuration.authentication_methods.each do |m|
+          token = send("find_#{m}")
+          next unless token
+          set_bearer_token(token)
+          if me
+            @protected_user = me
+            break
+          end
+        end
+      end
+      protected_user
     end
-
+    
+    def protected_user
+      @protected_user
+    end
+    
   end
 end
