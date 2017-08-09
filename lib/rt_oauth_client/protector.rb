@@ -24,7 +24,6 @@ module RtOauthClient
         else
           render inline: 'you need sign in to continue', status: 401
         end
-        return
       end
     end
     alias_method :protect_with_user!, :protect!
