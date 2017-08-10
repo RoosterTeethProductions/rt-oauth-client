@@ -18,6 +18,7 @@ module RtOauthClient
       fetch_user_from_oauth2 # load user from request headers
       
       unless protected_user
+        #Define protect_failure to return custom response
         if respond_to?(:protect_failure)
           protect_failure
         else
