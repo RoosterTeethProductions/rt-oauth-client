@@ -10,7 +10,6 @@ module RtOauthClient
       include RtOauthClient::ParamToken
       include RtOauthClient::BearerToken
     end
-    
     helper_method :protected_user
 
     protected
@@ -42,10 +41,11 @@ module RtOauthClient
       end
       protected_user
     end
+    alias_method :protect_with_user, :fetch_user_from_oauth2
     
+    #msut call fetch_user_from_oauth2, then #protected_user
     def protected_user
       @protected_user
     end
-    
   end
 end
