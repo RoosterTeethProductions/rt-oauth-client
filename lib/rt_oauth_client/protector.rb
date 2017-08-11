@@ -19,7 +19,7 @@ module RtOauthClient
       
       unless protected_user
         #Define protect_failure to return custom response
-        if respond_to?(:protect_failure)
+        if respond_to?(:protect_failure, true) # check protected and private methods too
           protect_failure
         else
           render inline: 'you need sign in to continue', status: 401
@@ -46,7 +46,7 @@ module RtOauthClient
     
     #msut call fetch_user_from_oauth2, then #protected_user
     def protected_user
-      @protected_user
+      @protected_user || fetch_user_from_oauth2
     end
   end
 end
