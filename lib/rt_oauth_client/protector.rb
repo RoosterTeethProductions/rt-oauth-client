@@ -9,8 +9,9 @@ module RtOauthClient
       include RtOauthClient::Authorizer
       include RtOauthClient::ParamToken
       include RtOauthClient::BearerToken
+
+      helper_method(:protected_user) if respond_to?(:protected_user, true)
     end
-    helper_method :protected_user
 
     protected
     
