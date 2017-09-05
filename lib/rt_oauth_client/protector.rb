@@ -30,7 +30,7 @@ module RtOauthClient
     alias_method :protect_with_user!, :protect!
     
     def fetch_user_from_oauth2
-      if protected_user.nil?
+      if @protected_user.nil?
         RtOauthClient.configuration.authentication_methods.each do |m|
           token = send("find_#{m}")
           next unless token
@@ -41,13 +41,13 @@ module RtOauthClient
           end
         end
       end
-      protected_user
+      @protected_user
     end
     alias_method :protect_with_user, :fetch_user_from_oauth2
     
     #msut call fetch_user_from_oauth2, then #protected_user
     def protected_user
-      @protected_user || fetch_user_from_oauth2
+      @protected_user
     end
   end
 end
