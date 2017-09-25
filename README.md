@@ -53,9 +53,9 @@ The internals of the `#protected_user` hash will be the return from [rt-oauth2 r
 
 Add `include RtOauthClient::Protector` to a controller
 
-add `before_action protect_with_user!` to halt with 403 if a user is not found
+add `before_action ::protect_with_user!` to halt with 403 if a user is not found
 
-add `before_action protect_with_user` _not_ to halt with 403
+add `before_action ::protect_with_user` _not_ to halt with 403
 
 ```
 class SomeController < ApplicationController
