@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    rt-oauth-client (0.1.11)
+    rt-oauth-client (0.1.13)
       oauth2 (~> 1.0)
       rails (~> 5.0)
 
