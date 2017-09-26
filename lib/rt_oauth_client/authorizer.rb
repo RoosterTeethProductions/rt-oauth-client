@@ -34,7 +34,16 @@ module RtOauthClient
     end
 
     def me
-      @me ||= JSON.parse(user_token.get('/api/v1/me').body) rescue nil
+      @me ||= begin
+        my_json = JSON.parse(user_token.get('/api/v1/me').body) # my_json could be {"error": "Unauthorized", "message": "The access token is invalid"}
+        if my_json["id"].blank?
+          nil
+        else
+          my_json
+        end
+      rescue
+        nil
+      end
     end
 
     def app_token
