@@ -9,15 +9,16 @@ module RtOauthClient
       include RtOauthClient::Authorizer
       include RtOauthClient::ParamToken
       include RtOauthClient::BearerToken
+      include RtOauthClient::RequestHelper
 
       helper_method(:protected_user) if respond_to?(:protected_user, true)
     end
 
     protected
-    
+
     def protect!
       fetch_user_from_oauth2 # load user from request headers
-      
+
       unless protected_user
         #Define protect_failure to return custom response
         if respond_to?(:protect_failure, true) # check protected and private methods too
@@ -28,7 +29,7 @@ module RtOauthClient
       end
     end
     alias_method :protect_with_user!, :protect!
-    
+
     def fetch_user_from_oauth2
       if @protected_user.nil?
         RtOauthClient.configuration.authentication_methods.each do |m|
@@ -44,7 +45,7 @@ module RtOauthClient
       @protected_user
     end
     alias_method :protect_with_user, :fetch_user_from_oauth2
-    
+
     #msut call fetch_user_from_oauth2, then #protected_user
     def protected_user
       @protected_user

@@ -8,6 +8,7 @@ module RtOauthClient
   autoload :ParamToken, 'rt_oauth_client/param_token'
   autoload :BearerToken, 'rt_oauth_client/bearer_token'
   autoload :Protector, 'rt_oauth_client/protector'
+  autoload :RequestHelper, 'rt_oauth_client/request_helper'
 
   class << self
     attr_accessor :configuration
