@@ -1,6 +1,10 @@
 require 'oauth2'
 module RtOauthClient
   module Authorizer
+    class ResponseError < StandardError
+
+    end
+
     extend ActiveSupport::Concern
     included do
       attr_accessor :user_token, :app_token
@@ -30,6 +34,19 @@ module RtOauthClient
         _client                    = client.dup
         _client.connection.headers = client.connection.headers.merge({'Authorization' => "Bearer #{token}"})
         _client.connection
+      end
+    end
+
+    def token_info
+      if @token_info
+        return @token_info
+      end
+      response_body = user_token.get("/oauth/token/info").body
+      response_json = JSON.parse(response_body)
+      if response_json["error"]
+        raise ResponseError, response_body
+      else
+        @token_info = response_json
       end
     end
 

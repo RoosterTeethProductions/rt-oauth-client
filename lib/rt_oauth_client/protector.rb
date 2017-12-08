@@ -4,6 +4,10 @@ require 'rt_oauth_client/param_token'
 require 'rt_oauth_client/authorizer'
 module RtOauthClient
   module Protector
+
+    class ScopesError < StandardError
+
+    end
     extend ActiveSupport::Concern
     included do
       include RtOauthClient::Authorizer
@@ -15,6 +19,27 @@ module RtOauthClient
     end
 
     protected
+
+    def rt_auth_authorize!(*scopes)
+      protect!
+      @_rt_auth_scopes = scopes.presence || RtOauthClient.configuration.default_scopes
+
+      unless valid_rt_auth_token?
+        rt_auth_scopes_error
+      end
+    end
+
+    def valid_rt_auth_token?
+      token_info && (token_info["expires_in_seconds"] > 0 rescue false) && match_scope?(token_info)
+    end
+
+    def match_scope?(token_info)
+      @_rt_auth_scopes.blank? || @_rt_auth_scopes.any?{|s| (token_info["scopes"] || []).include?(s.to_s) }
+    end
+
+    def rt_auth_scopes_error
+      raise ScopesError, "Permissions #{@_rt_auth_scopes.join(', ')} are required."
+    end
 
     def protect!
       fetch_user_from_oauth2 # load user from request headers
