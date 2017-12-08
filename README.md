@@ -57,6 +57,28 @@ add `before_action ::protect_with_user!` to halt with 403 if a user is not found
 
 add `before_action ::protect_with_user` _not_ to halt with 403
 
+Similar as `doorkeeper_authorize!`.
+
+Add `before_action -> { rt_auth_authorize! :user }, only: :index` to authorize scopes of user access token.
+Please note that there is a logical OR between multiple required scopes. In the
+above example, `rt_auth_authorize! :admin, :write` means that the access
+token is required to have either `:admin` scope or `:write` scope, but does not
+need have both of them.
+
+```ruby
+class Api::V1::ProductsController < Api::V1::ApiController
+  before_action -> { rt_auth_authorize! :public }, only: :index
+  before_action only: [:create, :update, :destroy] do
+    rt_auth_authorize! :admin
+    rt_auth_authorize! :write
+  end
+end
+```
+
+If you want to require the access token to have multiple scopes at the same
+time, use multiple `doorkeeper_authorize!`, for example:
+
+
 ```
 class SomeController < ApplicationController
   include RtOauthClient::Protector
