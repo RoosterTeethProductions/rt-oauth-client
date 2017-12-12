@@ -13,7 +13,6 @@ module RtOauthClient
       include RtOauthClient::Authorizer
       include RtOauthClient::ParamToken
       include RtOauthClient::BearerToken
-      include RtOauthClient::RequestHelper
 
       helper_method(:protected_user) if respond_to?(:protected_user, true)
     end
