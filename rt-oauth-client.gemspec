@@ -20,7 +20,7 @@ Gem::Specification.new do |s|
   s.add_dependency "oauth2", "~> 1.0"
 
   s.add_development_dependency "bundler", "~> 1.15"
-  s.add_development_dependency "rake", "~> 10.0"
+  s.add_development_dependency "rake", "~> 13.0"
   s.add_development_dependency "rspec", "~> 3.0"
   s.add_development_dependency "webmock", "~> 3.0"
   s.add_development_dependency "factory_girl", "~> 4.7.0"
